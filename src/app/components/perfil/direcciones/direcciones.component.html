@@ -1,0 +1,190 @@
+<app-nav></app-nav>
+
+<div class="ps-page--default">
+    <div class="container">
+        <div class="ps-page__header">
+            <h3>Mi cuenta</h3>
+            <ul class="ps-breadcrumb">
+                <li><a style="cursor: pointer;" [routerLink]="['/cuenta/perfil']">Mi perfil</a></li>
+                <li class="active"><a><b>Direcciones</b></a></li>
+                <li><a style="cursor: pointer;" [routerLink]="['/cuenta/pedidos']">Mis pedidos</a></li>
+                <li><a style="cursor: pointer;" [routerLink]="['/cuenta/reviews']">Mis reseñas</a></li>
+
+            </ul>
+        </div>
+        <div class="ps-page__content">
+
+            <div class="ps-tab-root">
+                <div class="ps-form--auth" style="max-width: 500px !important;">
+                    <ul class="ps-tab-list">
+                        <li [ngClass]="{'active': op == 1}" (click)="changeOp(1)"><a>Nueva dirección</a></li>
+                        <li [ngClass]="{'active': op == 2}" (click)="changeOp(2)"><a>Direcciones</a></li>
+                    </ul>
+                    <div class="ps-tabs">
+                        <div class="ps-tab" [ngClass]="{'active': op == 1}">
+                            <div class="ps-checkout">
+                                <form class="ps-form--checkout" #registroForm="ngForm"
+                                    (ngSubmit)="registrar(registroForm)" style="margin-bottom: 50px;">
+                                    <div class="row">
+                                        <div class="col-md-12 mx-auto">
+                                            <div class="ps-form__billings">
+
+                                                <div class="row">
+                                                    <div class="col-sm-6 form-group">
+                                                        <label for="ac-fn">Nombres(*)</label>
+                                                        <input type="text" required class="form-control form-control-lg"
+                                                            name="nombres" [(ngModel)]="direccion.nombres"
+                                                            placeholder="Nombres completos">
+                                                    </div>
+                                                    <div class="col-sm-6 form-group">
+                                                        <label for="ac-fn">Apellidos(*)</label>
+                                                        <input type="text" required class="form-control form-control-lg"
+                                                            name="apellidos" [(ngModel)]="direccion.apellidos"
+                                                            placeholder="Apellidos completos">
+                                                    </div>
+                                                    <div class="col-sm-6 form-group">
+                                                        <label for="ac-fn">Documento de Identidad(*)</label>
+                                                        <input *ngIf="currency == 'MXN'" type="text" required
+                                                            class="form-control form-control-lg" name="dni"
+                                                            [(ngModel)]="direccion.dni"
+                                                            placeholder="Documento de Identidad">
+                                                    </div>
+                                                    <div class="col-sm-6 form-group">
+                                                        <label for="ac-fn">Telefono(*)</label>
+                                                        <input type="text" required class="form-control form-control-lg"
+                                                            name="telefono" [(ngModel)]="direccion.telefono"
+                                                            placeholder="Telefono">
+                                                    </div>
+                                                    <div class="col-sm-6 form-group">
+                                                        <label for="ac-fn">ZIP(*)
+                                                        </label>
+                                                        <input *ngIf="currency == 'MXN'" type="text" required
+                                                            class="form-control form-control-lg" name="zip"
+                                                            [(ngModel)]="direccion.zip" placeholder="Código postal">
+                                                    </div>
+                                                    <div class="col-sm-6 form-group">
+                                                        <label for="ac-fn">País(*)</label>
+                                                        <select *ngIf="currency == 'MXN'" class="form-control"
+                                                            name="pais" required [(ngModel)]="direccion.pais">
+                                                            <option value="México" selected disabled>México</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-6 form-group" *ngIf="direccion.pais == 'México'">
+                                                        <label for="ac-fn">Estado(*)</label>
+                                                        <input type="text" required class="form-control form-control-lg"
+                                                            name="estado" [(ngModel)]="direccion.estado"
+                                                            placeholder="Estado">
+                                                    </div>
+                                                    <div class="col-sm-6 form-group" *ngIf="direccion.pais == 'México'">
+                                                        <label for="ac-fn">Municipio(*)</label>
+                                                        <input type="text" required class="form-control form-control-lg"
+                                                            name="municipio" [(ngModel)]="direccion.municipio"
+                                                            placeholder="Municipio">
+                                                    </div>
+                                                    <div class="col-sm-12 form-group">
+                                                        <label for="ac-fn">Dirección(*)</label>
+                                                        <textarea required class="form-control" placeholder="Direccion"
+                                                            name="direccion" [(ngModel)]="direccion.direccion"
+                                                            rows="3"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-12 form-group">
+                                                        <label for="ac-fn">Referencia
+                                                        </label>
+                                                        <textarea *ngIf="currency == 'MXN'" type="text"
+                                                            class="form-control" placeholder="Referencia"
+                                                            name="referencia" [(ngModel)]="direccion.referencia"
+                                                            rows="2"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <button type="submit"
+                                                            class="ps-btn ps-btn--fullwidth ps-btn--black">Guardar</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="ps-tab" [ngClass]="{'active': op == 2}">
+                            <div class="">
+                                <div class="ps-form--checkout">
+                                    <div class="row">
+                                        <div class="col-md-12 mx-auto">
+
+                                            <div class="row">
+                                                <ng-container *ngIf="!load_data">
+                                                    <div class="col-12" *ngIf="direcciones.length >= 1">
+                                                        <ng-container *ngFor="let item of direcciones">
+                                                            <div class="card mb-3">
+                                                                <div class="card-body">
+                                                                    <figure>
+                                                                        <figcaption>{{item.destinatario}}</figcaption>
+                                                                        <span
+                                                                            class="d-block mb-3 font-size-sm text-muted">{{item.zip}}</span>
+
+                                                                        <div class="row">
+                                                                            <div class="col"
+                                                                                *ngIf="item.pais == 'México'">
+                                                                                <p>
+                                                                                    {{item.pais}}, {{item.estado}},
+                                                                                    <br>
+                                                                                    <span>{{item.municipio}}.</span>
+                                                                                </p>
+                                                                                <p>
+                                                                                    {{item.direccion}}
+                                                                                    <ng-container
+                                                                                        *ngIf="item.referencia">
+                                                                                        <br>
+                                                                                        {{item.referencia}}
+                                                                                    </ng-container>
+
+                                                                                </p>
+                                                                            </div>
+                                                                            <a class="text-danger"
+                                                                                (click)="eliminar(item._id)"
+                                                                                style="cursor: pointer;margin-right: 2rem;">[Eliminar]</a>
+                                                                        </div>
+                                                                    </figure>
+
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+                                                    </div>
+                                                    <div class="col-12" *ngIf="direcciones.length == 0">
+                                                        <div class="rounded mb-5 p-3">
+                                                            <form class="ps-form--404" action="404-page.html"
+                                                                method="get">
+                                                                <div class="ps-form__header">
+                                                                    <img src="assets/images/icono-no-orden.png" alt="">
+                                                                </div>
+                                                                <h4 class="text-muted">No tienes ninguna dirección
+                                                                    registrada.</h4>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+
+                                                <div class="col-12 text-center" *ngIf="load_data">
+                                                    <span>Cargando...</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+<app-footer></app-footer>

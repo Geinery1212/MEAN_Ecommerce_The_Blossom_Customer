@@ -1,0 +1,48 @@
+[
+    {
+        "titulo":"Playeras",
+        "slug":"playeras",
+        "_id": "1000"
+    },
+    {
+        "titulo":"Sueters",
+        "slug":"Sueters",
+        "_id": "1001"
+    },
+    {
+        "titulo":"Faldas",
+        "slug":"faldas",
+        "_id": "1004"
+    },
+    {
+        "titulo":"Shorts",
+        "slug":"shorts",
+        "_id": "1005"
+    },
+    {
+        "titulo":"Camisas",
+        "slug":"camisas",
+        "_id": "1002"
+    },
+    {
+        "titulo":"Vestidos",
+        "slug":"Vestidos",
+        "_id": "1006"
+    },
+    {
+        "titulo":"Tops",
+        "slug":"tops",
+        "_id": "1007"
+    },
+    {
+        "titulo":"Accesorios",
+        "slug":"camisas",
+        "_id": "1003"
+    },
+    {
+        "titulo":"Packs",
+        "slug":"packs",
+        "_id": "1008"
+    }
+    
+]
